@@ -18,8 +18,12 @@ public class ItemSpawner : MonoBehaviour
 
     public TMP_Text box;
 
+    bool canSpawn = false;
+
+    float time;
     private void Start()
     {
+        time = 0;
         beltInSequence = null;
         beltInSequence = FindNextBelt();
         gameObject.name = $"ItemSpawner: {ItemSpawnerID++}";
@@ -28,8 +32,16 @@ public class ItemSpawner : MonoBehaviour
         GM = GameObject.FindObjectOfType<GameManager>();
         beltItems = GM.Elements;
     }
-    
-   
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+        if (time % rate == 0 || canSpawn)
+        {
+            //SpawnItem();
+            canSpawn = true;
+        }
+    }
 
     void SpawnItem()
     {
@@ -47,6 +59,7 @@ public class ItemSpawner : MonoBehaviour
         {
             //Debug.Log("success");
             Instantiate(beltItems[index], beltInSequence.transform.position, Quaternion.identity);
+            canSpawn = false;
         }
     }
 

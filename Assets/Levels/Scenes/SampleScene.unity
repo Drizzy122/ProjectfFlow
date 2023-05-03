@@ -928,7 +928,7 @@ MonoBehaviour:
   - {fileID: 4889371130029943255, guid: 94be70dd8ab3c5e44880f52287a6cee5, type: 3}
   - {fileID: 8882426386972120491, guid: 2977ad17fd631d14696d3dcac8b09dc4, type: 3}
   Sprites:
-  - {fileID: 21300000, guid: 280076e787a0ea34fb87d8fbebd3b1b1, type: 3}
+  - {fileID: 21300000, guid: 7554652c2caeb6343b5b96e4e52773bd, type: 3}
   - {fileID: 21300000, guid: f4c59718a27ff84429c33ef912c98b58, type: 3}
   - {fileID: 21300000, guid: 2250b5ba5e16b1e4eba7f5e0b3289014, type: 3}
   - {fileID: 21300000, guid: b35ebfb9e4d0cfc4882e565dc1848470, type: 3}
