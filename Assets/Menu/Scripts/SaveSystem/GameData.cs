@@ -6,10 +6,9 @@ using UnityEngine;
 public class GameData
 {
     public long lastUpdated;
-    public int deathCount;
+    //public int deathCount;
 
-    public Vector3 playerPosition;
-    public Vector3 npcPosition;
+    
     public SerializableDictionary<string, bool> coinsCollected;
     //Optional remove if not needed
     public AttributesData playerAttributesData;
@@ -18,11 +17,10 @@ public class GameData
     // the game starts with when there's no data to load
     public GameData()
     {
-        this.deathCount = 0;
-        playerPosition = Vector3.zero;
-        npcPosition = Vector3.zero;
+       // this.deathCount = 0;
+        
         coinsCollected = new SerializableDictionary<string, bool>();
-        playerAttributesData = new AttributesData();
+        
     } 
 
     public int GetPercentageComplete()

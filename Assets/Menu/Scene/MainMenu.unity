@@ -292,14 +292,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6384776845225573085, guid: 11189c0e68e720c4394afb58486c6a57, type: 3}
-      propertyPath: useEncryption
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6384776845225573085, guid: 11189c0e68e720c4394afb58486c6a57, type: 3}
-      propertyPath: TestSelectedProfileId
-      value: ProjectFlow
-      objectReference: {fileID: 0}
     - target: {fileID: 8347188335385838379, guid: 11189c0e68e720c4394afb58486c6a57, type: 3}
       propertyPath: m_RootOrder
       value: 1

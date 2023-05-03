@@ -45,7 +45,7 @@ public class SaveSlot : MonoBehaviour
             clearButton.gameObject.SetActive(true);
 
             percentageCompleteText.text = data.GetPercentageComplete() + "% COMPLETE";
-            deathCountText.text =" DEATH count: " + data.deathCount;
+           // deathCountText.text =" DEATH count: " + data.deathCount;
         }
     }
 
