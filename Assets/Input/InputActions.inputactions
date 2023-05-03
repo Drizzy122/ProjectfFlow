@@ -1,0 +1,65 @@
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "Placement",
+            "id": "49aab22c-7f0c-42bc-9e2a-2ef816dc5d14",
+            "actions": [
+                {
+                    "name": "Place",
+                    "type": "Button",
+                    "id": "17a8e864-01ac-4764-a58f-6d40aca1b66f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Button",
+                    "id": "91b30fc7-6ad4-4b17-a22f-d98b7b8ba5f6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "963eaa29-3cf7-4c67-92b2-2132b8f8ab07",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Place",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc2eab96-63f6-4fbe-a04a-bea814c90cfa",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd2b0972-d7b7-4766-8213-856b1d06f59e",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
