@@ -20,7 +20,7 @@ public class Reaction : MonoBehaviour
                 {
                     {"Water", "Water"},
                     {"Lava", "Rock"},
-                    {"Hydrochloric Acid", "Hydrochloric Acid"},
+                    {"Hydrochloric Acid", "Explosion"},
                     {"Ice","Ice"},
                     {"Rock","Rock"},
                     {"Frozen Acid", "Frozen Acid"},
@@ -32,9 +32,9 @@ public class Reaction : MonoBehaviour
                 {
                     {"Lava","Lava"},
                     {"Hydrochloric Acid" ,"Lava"},
-                    {"Ice", "Lava"},
+                    {"Ice", "Steam"},
                     {"Rock", "Lava"},
-                    {"Frozen Acid", "Water"},
+                    {"Frozen Acid", "Explosion"},
                     {"Steam", "Hydrochloric Gas"},
                     {"Hydrochloric Gas", "Lava"}
                 }
@@ -42,7 +42,7 @@ public class Reaction : MonoBehaviour
             {"Hydrochloric Acid", new Dictionary<string, string>()
                 {
                     {"Hydrochloric Acid", "Hydrochloric Acid"},
-                    {"Ice", "Rock"},
+                    {"Ice", "Explosion"},
                     {"Rock", "Lava"},
                     {"Frozen Acid", "Hydrochloric Acid"},
                     {"Steam", "Hydrochloric Acid"},
@@ -56,7 +56,7 @@ public class Reaction : MonoBehaviour
                     {"Rock", "Rock"},
                     {"Frozen Acid", "Ice"},
                     {"Steam", "Water"},
-                    {"Hydrochloric Gas", "Hydrochloric Acid"}
+                    {"Hydrochloric Gas", "Explosion"}
 
                 }
             },
@@ -79,7 +79,7 @@ public class Reaction : MonoBehaviour
             {"Steam", new Dictionary<string, string>()
                 {
                     {"Steam", "Steam"},
-                    {"Hydrochloric Gas", "Lava"}
+                    {"Hydrochloric Gas", "Explosion"}
                 }
             },
             {"Hydrochloric Gas", new Dictionary<string, string>()

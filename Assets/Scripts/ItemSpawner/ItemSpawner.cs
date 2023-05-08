@@ -30,7 +30,7 @@ public class ItemSpawner : MonoBehaviour
         InvokeRepeating("SpawnItem", 0, rate);
 
         GM = GameObject.FindObjectOfType<GameManager>();
-        beltItems = GM.Elements;
+        beltItems = GM.unlockedElements;
     }
 
     private void Update()
@@ -82,12 +82,10 @@ public class ItemSpawner : MonoBehaviour
 
     public void RotateItem(){
         index ++;
-        
+        beltItems = GM.unlockedElements;
         if(index >= beltItems.Count)
             index = 0;
-        else if(index == 3 || index == 1 || index == 6){
-            index ++;
-        }
+
         box.text = beltItems[index].GetComponent<Element>().elementType;
     }
 }
