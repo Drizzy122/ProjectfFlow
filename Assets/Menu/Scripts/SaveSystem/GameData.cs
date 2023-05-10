@@ -11,7 +11,7 @@ public class GameData
     
     public SerializableDictionary<string, bool> coinsCollected;
     //Optional remove if not needed
-    public AttributesData playerAttributesData;
+    //public AttributesData playerAttributesData;
 
     // the values defined in this constructor will be the default values
     // the game starts with when there's no data to load
