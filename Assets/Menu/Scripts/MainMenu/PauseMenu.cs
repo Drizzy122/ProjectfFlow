@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
-{   /*
+{   
     // Reference to the PlayerControl class, which handles player input
     private PlayerInput playerInput;
 
@@ -92,5 +92,5 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         // Cursor.lockState = CursorLockMode.Locked;
     }
-    */
+    
 }
