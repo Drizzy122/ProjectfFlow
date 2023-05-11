@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0002, y: -0.779}
+  m_AnchoredPosition: {x: -0.15, y: 0.397}
   m_SizeDelta: {x: 19.1333, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3490427668727004172
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 4848180264250917920}
   - component: {fileID: 8672095995714902047}
   m_Layer: 0
-  m_Name: ItemSawner
+  m_Name: ItemSpawner
   m_TagString: Placeable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,8 +279,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5190247231979620330}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2467, y: -0.0344, z: 10.0973835}
-  m_LocalScale: {x: 1.3766, y: 0.9718, z: 1}
+  m_LocalPosition: {x: -0.0259, y: -0.0344, z: 10.0973835}
+  m_LocalScale: {x: 1.4159509, y: 0.9718, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4986448459502068813}
