@@ -5,13 +5,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System;
 
 public class PlacementManager : MonoBehaviour
 {
     public List<GameObject> Items;
     public List<Sprite> Sprites;
-
-
+    
     public GameObject IMGPrefab;
 
     GameObject belts;
@@ -99,6 +99,7 @@ public class PlacementManager : MonoBehaviour
         //Debug.Log(pos);
         return pos;
     }
+
     bool ValidLocation()
     {
         Vector3 mousePos = MousePos();

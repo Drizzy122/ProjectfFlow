@@ -15,12 +15,14 @@ public class GameManager : MonoBehaviour
     VoiceLineManager VLM;
     int tutorialStage = 0;
     bool stageDone = false;
+    public int money;
 
     // Start is called before the first frame update
     void Start()
     {
         VLM = FindObjectOfType<VoiceLineManager>();
         Tutorial();
+        money = PlayerPrefs.GetInt("Money",0);
     }
 
     // Update is called once per frame
@@ -71,8 +73,8 @@ public class GameManager : MonoBehaviour
                     VLM.TutorialVoiceLine(tutorialStage);
                     tutorialStage = 3;
                     break;
-
         }
+
         if(tutorialStage != 3){
             textbox.text = $"Make {elementOBJ}";
             stageDone = false;
@@ -80,5 +82,18 @@ public class GameManager : MonoBehaviour
         else{
             textbox.text = "";
         }
+    }
+
+    public void AddMoney(int amount){
+        money += amount;
+    }
+
+    public void DelMoney(int amount){
+        money -= amount;
+    }
+
+    void OnApplicationQuit(){
+        PlayerPrefs.SetInt("Money", money);
+        Debug.Log("Application ending after " + Time.time + " seconds");
     }
 }

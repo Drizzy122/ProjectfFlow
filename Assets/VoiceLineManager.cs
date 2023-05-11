@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class VoiceLineManager : MonoBehaviour
 {
-    [SerializeField]
-    List<AudioClip> TutorialClips;
-    AudioSource AS;
+    public List<AudioClip> TutorialClips;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        AS = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -20,9 +19,10 @@ public class VoiceLineManager : MonoBehaviour
         
     }
     public void TutorialVoiceLine(int index){
+        audioSource = GetComponent<AudioSource>();
         print(index);
-        AS.clip = TutorialClips[index];
-        AS.Play();
+        audioSource.clip = TutorialClips[index];
+        audioSource.Play();
         index++;
     }
 }
