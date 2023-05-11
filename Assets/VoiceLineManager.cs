@@ -9,6 +9,7 @@ public class VoiceLineManager : MonoBehaviour
     public List<AudioClip> explosionVoiclines;
     
     public List<AudioClip> randomVoiceLines;
+    public int randomInt;
     int EVLIndex = 0;
     AudioSource audioSource;
 
@@ -21,11 +22,15 @@ public class VoiceLineManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        randomInt = Random.Range(0,10000);
         
+        if(randomInt == 468){
+            RandomVoiceLine();
+        }
     }
     public void TutorialVoiceLine(int index){
         audioSource = GetComponent<AudioSource>();
-        print(index);
+        //print(index);
         audioSource.clip = TutorialClips[index];
         audioSource.Play();
         index++;
@@ -48,10 +53,13 @@ public class VoiceLineManager : MonoBehaviour
                 EVLIndex++;
                 break;
         }
-
     }
 
     void RandomVoiceLine(){
-
+        if(!audioSource.isPlaying){
+            print("playing random clip");
+            audioSource.clip = randomVoiceLines[Random.Range(0,randomVoiceLines.Count)];
+            audioSource.Play();
+        }
     }
 }

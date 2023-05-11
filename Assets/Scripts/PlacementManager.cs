@@ -58,11 +58,6 @@ public class PlacementManager : MonoBehaviour
             GameObject obj =  Instantiate(Items[index], pos, rotation, belts.transform);
             PlaySound(itemPlaceSound);
 
-            switch(Items[index].name){
-                case "Splitter":
-                    PlaySound(itemSplitterAudio);
-                    break;
-            }
             foreach(GameObject GO in Rotatable){
                 if(Items[index] == GO){
                     return;

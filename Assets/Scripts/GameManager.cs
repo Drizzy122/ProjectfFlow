@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
 public class GameManager : MonoBehaviour
@@ -20,8 +21,10 @@ public class GameManager : MonoBehaviour
     public int money;
 
     public TMP_Text moneyText;
+    float brokeTimer = 0;
 
-    public List<AudioClip> explosionVoiceLines;
+    public GameObject GameOverText;
+
     int explosionVLIndex = 0;
 
     // Start is called before the first frame update
@@ -29,8 +32,9 @@ public class GameManager : MonoBehaviour
     {
         VLM = FindObjectOfType<VoiceLineManager>();
         Tutorial();
-        money = PlayerPrefs.GetInt("Money",0);
         moneyText.text = money.ToString();
+        brokeTimer = 0;
+        GameOverText.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,6 +43,16 @@ public class GameManager : MonoBehaviour
         Element[] list = GameObject.FindObjectsOfType<Element>();
         CheckNewElement(list);
         TutorialCheck(list);
+
+        if(money <= 1){
+            brokeTimer += Time.deltaTime;
+            if(brokeTimer >= 5){
+                GameOverText.SetActive(true);
+                Invoke("MainMenu",5);
+            }
+        }else{
+            brokeTimer = 0;
+        }
     }
 
     void CheckNewElement(Element[] list){
@@ -49,7 +63,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            VLM.VoiceLine(check.elementType);
+            
             if(check.elementType == "Explosion"){
                 return;
             }
@@ -99,18 +113,23 @@ public class GameManager : MonoBehaviour
 
     public void AddMoney(int amount){
         money += amount;
-        print(amount);
+        //print(amount);
         moneyText.text = money.ToString();
     }
 
     public void DelMoney(int amount){
         money -= amount;
-        print(-amount);
+        //print(-amount);
         moneyText.text = money.ToString();
     }
 
     void OnApplicationQuit(){
-        PlayerPrefs.SetInt("Money", money);
+        PlayerPrefs.DeleteAll();
         Debug.Log("Application ending after " + Time.time + " seconds");
     }
+
+    void MainMenu(){
+        SceneManager.LoadScene(0);
+    }
+
 }

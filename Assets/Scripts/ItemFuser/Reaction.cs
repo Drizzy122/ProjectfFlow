@@ -11,6 +11,9 @@ public class Reaction : MonoBehaviour
     public AudioClip frozenAcid;
     bool frozenAcidDone = false;
 
+    public AudioClip hydrochloricGas;
+    bool hydrochloricGasDone = false;
+
     public AudioClip hydrochloricAcid;
     bool hydrochloricAcidDone = false;
 
@@ -25,6 +28,8 @@ public class Reaction : MonoBehaviour
 
     GameObject produce;
 
+    VoiceLineManager VLM;
+
     public Dictionary<string, Dictionary<string, string>> elementMap = new Dictionary<string, Dictionary<string, string>>()
         {
             {"Water", new Dictionary<string, string>()
@@ -36,7 +41,7 @@ public class Reaction : MonoBehaviour
                     {"Rock","Rock"},
                     {"Frozen Acid", "Explosion"},
                     {"Steam", "Steam"},
-                    {"Hydrochloric gas", "Hydrochloric Acid"}
+                    {"Hydrochloric Gas", "Hydrochloric Acid"}
                 }
             },
             {"Lava", new Dictionary<string, string>()
@@ -47,13 +52,13 @@ public class Reaction : MonoBehaviour
                     {"Rock", "Explosion"},
                     {"Frozen Acid", "Explosion"},
                     {"Steam", "Hydrochloric Gas"},
-                    {"Hydrochloric Gas", "Explosion "}
+                    {"Hydrochloric Gas", "Explosion"}
                 }
             },
             {"Hydrochloric Acid", new Dictionary<string, string>()
                 {
                     {"Hydrochloric Acid", "Hydrochloric Acid"},
-                    {"Ice", "Explosion"},
+                    {"Ice", "Frozen Acid"},
                     {"Rock", "Explosion"},
                     {"Frozen Acid", "Hydrochloric Acid"},
                     {"Steam", "Hydrochloric Gas"},
@@ -103,11 +108,27 @@ public class Reaction : MonoBehaviour
 
 
     void Start(){
+        VLM = FindObjectOfType<VoiceLineManager>();
         AS = GetComponent<AudioSource>();
         GM = GameObject.FindObjectOfType<GameManager>();
         fuser = GetComponent<ItemFuser>();
     }
 
+
+    void Update(){
+        if(!steamDone && PlayerPrefs.GetInt("steam",0) == 1){
+            steamDone = true;
+        }
+        if(!hydrochloricAcidDone && PlayerPrefs.GetInt("Hydrochloric Acid",0) == 1){
+            hydrochloricAcidDone = true;
+        }
+        if(!frozenAcidDone &&PlayerPrefs.GetInt("Frozen Acid",0) == 1){
+            frozenAcidDone = true;
+        }
+        if(!hydrochloricGasDone &&PlayerPrefs.GetInt("Hydrochloric Gas",0) == 1){
+            hydrochloricGasDone = true;
+        }
+    }
     public GameObject React(GameObject item1, GameObject item2){
         string element1 = item1.GetComponent<Element>().elementType;
         string element2 = item2.GetComponent<Element>().elementType;
@@ -130,25 +151,33 @@ public class Reaction : MonoBehaviour
         switch(sound){
             case "Steam":
                 if(!steamDone){
-                    AS.clip = steam;
-                    AS.Play();
                     steamDone = true;
+                    VLM.PlayClip(steam);
+                    PlayerPrefs.SetInt("steam",1);
                 }
                 break;
 
             case "Hydrochloric Acid":
                 if(!hydrochloricAcidDone){
-                    AS.clip = hydrochloricAcid;
-                    AS.Play();
-                    hydrochloricAcidDone = true;
+                    hydrochloricAcidDone = true;    
+                    PlayerPrefs.SetInt("Hydrochloric Acid",1);                
+                    VLM.PlayClip(hydrochloricAcid);
+                }
+                break;
+
+            case "Hydrochloric Gas":
+                if(!hydrochloricGasDone){
+                    hydrochloricGasDone = true;    
+                    PlayerPrefs.SetInt("Hydrochloric Gas",1);                
+                    VLM.PlayClip(hydrochloricGas);
                 }
                 break;
 
             case "Frozen Acid":
                 if(!frozenAcidDone){
-                    AS.clip = frozenAcid;
-                    AS.Play();
                     frozenAcidDone = true;
+                    PlayerPrefs.SetInt("Frozen Acid",1);
+                    VLM.PlayClip(frozenAcid);
                 }
                 break;
             default:
@@ -157,6 +186,7 @@ public class Reaction : MonoBehaviour
     }
 
     GameObject InstantiateOBJ(){
+        print(produce.name);
         return Instantiate(produce,fuser.GetItemPosition(), Quaternion.identity);
     }
 }

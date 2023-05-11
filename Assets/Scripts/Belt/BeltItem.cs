@@ -50,7 +50,7 @@ public class BeltItem : MonoBehaviour
             if (!belt.IsSpaceTaken())
             {
                 belt.TakeSpace(true);
-                print("bruh");
+                //print("bruh");
                 belt.GiveItem(gameObject.GetComponent<BeltItem>());
             }
         }

@@ -39,7 +39,7 @@ public class ItemSpawner : MonoBehaviour
     {
         if (period > rate || canSpawn)
         {
-            print("hi");
+            //print("hi");
             canSpawn = true;
             SpawnItem();
             period = 0;

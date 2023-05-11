@@ -7,9 +7,12 @@ public class Exposion : MonoBehaviour
     public float radius;
     public AudioClip explosionSound;
     AudioSource AS;
+
+    VoiceLineManager VLM;
     // Start is called before the first frame update
     void Start()
     {
+        VLM = FindObjectOfType<VoiceLineManager>();
         AS = GetComponent<AudioSource>();
         AS.clip = explosionSound;
         CircleCollider2D collider = gameObject.AddComponent<CircleCollider2D>();
@@ -19,6 +22,7 @@ public class Exposion : MonoBehaviour
 
         Invoke("DestroySelf", 1);
         AS.Play();
+        VLM.VoiceLine("Explosion");
     }
 
     void DestroySelf(){

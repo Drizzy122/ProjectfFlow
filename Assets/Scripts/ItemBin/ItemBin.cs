@@ -38,7 +38,7 @@ public class ItemBin : MonoBehaviour
         isSpaceTaken = true;
         GameObject el = GM.Elements.SingleOrDefault(x => x.name == beltItem.GetComponent<Element>().elementType);
         
-        print(GM.Elements.IndexOf(el) + " " + beltItem.GetComponent<Element>().elementType);
+        //print(GM.Elements.IndexOf(el) + " " + beltItem.GetComponent<Element>().elementType);
         
         int amount = GM.ElementWorth[GM.Elements.IndexOf(el)];
         GM.AddMoney(amount);
