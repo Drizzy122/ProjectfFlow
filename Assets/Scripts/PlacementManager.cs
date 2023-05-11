@@ -4,16 +4,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
-using System.Linq;
-using System;
 
 public class PlacementManager : MonoBehaviour
 {
     public List<GameObject> Items;
     public List<Sprite> Sprites;
-    
+    public List<int> ItemPrice;
     public GameObject IMGPrefab;
-
     GameObject belts;
     GameObject UIGrid;
     Quaternion rotation;
@@ -21,11 +18,24 @@ public class PlacementManager : MonoBehaviour
     List<int> indexes = new List<int>();
     List<GameObject> inventoryItems = new List<GameObject>();
     int rot = 0;
-
     GameManager GM;
+
+    public List<GameObject> Rotatable;
+
+    public AudioClip itemPlaceSound;
+    public AudioClip itemDestroyedSound;
+    public AudioClip select;
+
+    public AudioClip itemSplitterAudio;
+    public AudioClip removerAudio;
+    bool removerBool = false;
+
+    AudioSource AS;
+
 
     private void Start()
     {
+        AS = GetComponent<AudioSource>();
         belts = GameObject.Find("Belts");
         PopulateInventory();
         GM = GameObject.FindObjectOfType<GameManager>();
@@ -39,18 +49,47 @@ public class PlacementManager : MonoBehaviour
     {
         if (context.performed && ValidLocation() && !MouseOverUI() && index != Items.Count-1)
         {
+            if(ItemPrice[index] > GM.money){
+                return;
+            }
             Vector3 pos = GridPosition();
-            Instantiate(Items[index], pos, rotation, belts.transform);
+            GM.DelMoney(ItemPrice[index]);
+
+            GameObject obj =  Instantiate(Items[index], pos, rotation, belts.transform);
+            PlaySound(itemPlaceSound);
+
+            switch(Items[index].name){
+                case "Splitter":
+                    PlaySound(itemSplitterAudio);
+                    break;
+            }
+            foreach(GameObject GO in Rotatable){
+                if(Items[index] == GO){
+                    return;
+                }
+            }
+            for(int j = 0; j < obj.transform.childCount; j++){
+                if(obj.transform.GetChild(j).name != "direction")
+                    obj.transform.GetChild(j).rotation = Quaternion.identity;
+            }
 
         }else if(context.performed && !MouseOverUI() && index == Items.Count-1){
             GameObject GO = GetGameObject();
             if(GO != null){
                 Destroy(GO);
+                GM.AddMoney(ItemPrice[index]);
+                PlaySound(itemDestroyedSound);
             }
         }else if(context.performed && !MouseOverUI() && GetGameObject().GetComponent<ItemSpawner>() != null ){
             ItemSpawner spawner = GetGameObject().GetComponent<ItemSpawner>();
-            spawner.RotateItem();
+            spawner.RotateItem(); 
+            PlaySound(select);
         }
+    }
+
+    void PlaySound(AudioClip clip){
+        AS.clip = clip;
+        AS.Play();
     }
 
     public void RotateItem(InputAction.CallbackContext context)
@@ -65,9 +104,10 @@ public class PlacementManager : MonoBehaviour
             rot += rotAmount;
             rotation = Quaternion.Euler(0, 0, rot);
 
-            foreach(GameObject GM in inventoryItems){
-                GM.transform.Find("IMG").Rotate(Vector3.forward * rotAmount);
-            }
+
+            UIGrid.transform.GetChild(0).Find("IMG").Rotate(Vector3.forward * rotAmount);
+            PlaySound(select);
+            
             //Debug.Log(rotation.eulerAngles);
 
             //rotation = quaternion;
@@ -75,10 +115,6 @@ public class PlacementManager : MonoBehaviour
         
     }
 
-    void SelectItem(int index)
-    {
-
-    }
 
     Vector3 MousePos()
     {
@@ -126,6 +162,11 @@ public class PlacementManager : MonoBehaviour
     public void indexChanger(int I)
     {
         index = I;
+
+        if(removerBool && index == Items.Count-1){
+            removerBool = true;
+            PlaySound(removerAudio);
+        }
     }
 
 

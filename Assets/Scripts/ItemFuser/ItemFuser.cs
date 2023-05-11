@@ -21,11 +21,17 @@ public class ItemFuser : MonoBehaviour
 
     Reaction react;
 
+    AudioSource AS;
+
+    public AudioClip fuzeSound;
+
     [Header("TEMP")]
     public BeltItem tempItem;
 
     private void Start()
     {
+        AS = GetComponent<AudioSource>();
+        AS.clip = fuzeSound;
         BM = FindObjectOfType<BeltManager>();
         beltInSequence = null;
         beltInSequence = FindNextBelt();
@@ -65,6 +71,7 @@ public class ItemFuser : MonoBehaviour
             }
             fuserItems.RemoveAt(0);
         }
+        AS.Play();
         fuserItems.Clear();
         fused = true;
         createPoduce = false;

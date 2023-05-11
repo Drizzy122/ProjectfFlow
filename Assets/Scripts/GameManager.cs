@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public List<GameObject> Elements;
 
+    public List<int> ElementWorth;
+
     public List<GameObject> unlockedElements;
 
     public TMP_Text textbox;
@@ -17,12 +19,18 @@ public class GameManager : MonoBehaviour
     bool stageDone = false;
     public int money;
 
+    public TMP_Text moneyText;
+
+    public List<AudioClip> explosionVoiceLines;
+    int explosionVLIndex = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         VLM = FindObjectOfType<VoiceLineManager>();
         Tutorial();
         money = PlayerPrefs.GetInt("Money",0);
+        moneyText.text = money.ToString();
     }
 
     // Update is called once per frame
@@ -41,7 +49,12 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            unlockedElements.Add(Elements[Elements.FindIndex(x => x.name == elementOBJ)]);
+            VLM.VoiceLine(check.elementType);
+            if(check.elementType == "Explosion"){
+                return;
+            }
+            print(Elements.FindIndex(x => x.name == check.elementType));
+            unlockedElements.Add(Elements[Elements.FindIndex(x => x.name == check.elementType)]);
         }
     }
 
@@ -69,7 +82,7 @@ public class GameManager : MonoBehaviour
                     tutorialStage = 2;
                     break;
                 case 2:
-                    elementOBJ = "asdasd";
+                    elementOBJ = "ghfu";
                     VLM.TutorialVoiceLine(tutorialStage);
                     tutorialStage = 3;
                     break;
@@ -86,10 +99,14 @@ public class GameManager : MonoBehaviour
 
     public void AddMoney(int amount){
         money += amount;
+        print(amount);
+        moneyText.text = money.ToString();
     }
 
     public void DelMoney(int amount){
         money -= amount;
+        print(-amount);
+        moneyText.text = money.ToString();
     }
 
     void OnApplicationQuit(){

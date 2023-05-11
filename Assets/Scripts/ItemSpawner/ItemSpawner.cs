@@ -10,7 +10,9 @@ public class ItemSpawner : MonoBehaviour
     public BeltInfo beltInSequence;
     public List<GameObject> beltItems;
 
-    public int rate;
+    public float rate;
+
+    public float period = 0.1f;
 
     int index = 0;
 
@@ -27,7 +29,7 @@ public class ItemSpawner : MonoBehaviour
         beltInSequence = null;
         beltInSequence = FindNextBelt();
         gameObject.name = $"ItemSpawner: {ItemSpawnerID++}";
-        InvokeRepeating("SpawnItem", 0, rate);
+        //InvokeRepeating("SpawnItem", 0, rate);
 
         GM = GameObject.FindObjectOfType<GameManager>();
         beltItems = GM.unlockedElements;
@@ -35,12 +37,14 @@ public class ItemSpawner : MonoBehaviour
 
     private void Update()
     {
-        time += Time.deltaTime;
-        if (time % rate == 0 || canSpawn)
+        if (period > rate || canSpawn)
         {
-            //SpawnItem();
+            print("hi");
             canSpawn = true;
+            SpawnItem();
+            period = 0;
         }
+        period += UnityEngine.Time.deltaTime;
     }
 
     void SpawnItem()

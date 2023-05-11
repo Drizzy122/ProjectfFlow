@@ -8,6 +8,17 @@ public class Reaction : MonoBehaviour
     public List<string> elementNames;
     public List<GameObject> elementGO;
 
+    public AudioClip frozenAcid;
+    bool frozenAcidDone = false;
+
+    public AudioClip hydrochloricAcid;
+    bool hydrochloricAcidDone = false;
+
+    public AudioClip steam;
+    bool steamDone = false;
+
+    AudioSource AS;
+
     ItemFuser fuser;
 
     GameManager GM;
@@ -20,32 +31,32 @@ public class Reaction : MonoBehaviour
                 {
                     {"Water", "Water"},
                     {"Lava", "Rock"},
-                    {"Hydrochloric Acid", "Explosion"},
+                    {"Hydrochloric Acid", "Steam"},
                     {"Ice","Ice"},
                     {"Rock","Rock"},
-                    {"Frozen Acid", "Frozen Acid"},
-                    {"Steam", "Water"},
+                    {"Frozen Acid", "Explosion"},
+                    {"Steam", "Steam"},
                     {"Hydrochloric gas", "Hydrochloric Acid"}
                 }
             },
             {"Lava", new Dictionary<string, string>()
                 {
                     {"Lava","Lava"},
-                    {"Hydrochloric Acid" ,"Lava"},
-                    {"Ice", "Steam"},
-                    {"Rock", "Lava"},
+                    {"Hydrochloric Acid" ,"Explosion"},
+                    {"Ice", "Hydrochloric Acid"},
+                    {"Rock", "Explosion"},
                     {"Frozen Acid", "Explosion"},
                     {"Steam", "Hydrochloric Gas"},
-                    {"Hydrochloric Gas", "Lava"}
+                    {"Hydrochloric Gas", "Explosion "}
                 }
             },
             {"Hydrochloric Acid", new Dictionary<string, string>()
                 {
                     {"Hydrochloric Acid", "Hydrochloric Acid"},
                     {"Ice", "Explosion"},
-                    {"Rock", "Lava"},
+                    {"Rock", "Explosion"},
                     {"Frozen Acid", "Hydrochloric Acid"},
-                    {"Steam", "Hydrochloric Acid"},
+                    {"Steam", "Hydrochloric Gas"},
                     {"Hydrochloric Gas", "Hydrochloric Acid"}
                 }
 
@@ -53,19 +64,19 @@ public class Reaction : MonoBehaviour
             {"Ice" , new Dictionary<string, string>()
                 {
                     {"Ice", "Ice"},
-                    {"Rock", "Rock"},
+                    {"Rock", "Explosion"},
                     {"Frozen Acid", "Ice"},
                     {"Steam", "Water"},
-                    {"Hydrochloric Gas", "Explosion"}
+                    {"Hydrochloric Gas", "Hydrochloric Acid"}
 
                 }
             },
             {"Rock", new Dictionary<string, string>()
                 {
                     {"Rock","Rock"},
-                    {"Frozen Acid", "Rock"},
+                    {"Frozen Acid", "Explosion"},
                     {"Steam", "Lava"},
-                    {"Hydrochloric Gas", "Hydrochloric Gas"}
+                    {"Hydrochloric Gas", "Explosion"}
                     
                 }
             },
@@ -92,6 +103,7 @@ public class Reaction : MonoBehaviour
 
 
     void Start(){
+        AS = GetComponent<AudioSource>();
         GM = GameObject.FindObjectOfType<GameManager>();
         fuser = GetComponent<ItemFuser>();
     }
@@ -104,12 +116,44 @@ public class Reaction : MonoBehaviour
         {
             print("Option1");
             produce = GM.Elements.SingleOrDefault(x => x.name == elementMap[element1][element2]);
+            PlaySound(elementMap[element1][element2]);
         }else if(elementMap.ContainsKey(element2) && elementMap[element2].ContainsKey(element1)){
             print("option2");
             produce = GM.Elements.SingleOrDefault(x => x.name == elementMap[element2][element1]);
+            PlaySound(elementMap[element2][element1]);
         }
         
         return InstantiateOBJ();
+    }
+
+    void PlaySound(string sound){
+        switch(sound){
+            case "Steam":
+                if(!steamDone){
+                    AS.clip = steam;
+                    AS.Play();
+                    steamDone = true;
+                }
+                break;
+
+            case "Hydrochloric Acid":
+                if(!hydrochloricAcidDone){
+                    AS.clip = hydrochloricAcid;
+                    AS.Play();
+                    hydrochloricAcidDone = true;
+                }
+                break;
+
+            case "Frozen Acid":
+                if(!frozenAcidDone){
+                    AS.clip = frozenAcid;
+                    AS.Play();
+                    frozenAcidDone = true;
+                }
+                break;
+            default:
+            break;
+        }
     }
 
     GameObject InstantiateOBJ(){

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemBin : MonoBehaviour
@@ -10,8 +11,17 @@ public class ItemBin : MonoBehaviour
     public float cooldownTime = 1f;
     bool isDestroying = false;
 
+    GameManager GM;
+
+    public AudioClip sellSound;
+
+    AudioSource AS;
+
     private void Start()
     {
+        AS = GetComponent<AudioSource>();
+        AS.clip = sellSound;
+        GM = FindObjectOfType<GameManager>();
         beltItem = null;
         gameObject.name = $"ItemBin: {beltID++}";
     }
@@ -26,9 +36,15 @@ public class ItemBin : MonoBehaviour
     void StartDestroy()
 {
         isSpaceTaken = true;
+        GameObject el = GM.Elements.SingleOrDefault(x => x.name == beltItem.GetComponent<Element>().elementType);
+        
+        print(GM.Elements.IndexOf(el) + " " + beltItem.GetComponent<Element>().elementType);
+        
+        int amount = GM.ElementWorth[GM.Elements.IndexOf(el)];
+        GM.AddMoney(amount);
 
         Destroy(beltItem.gameObject);
-
+        AS.Play();
         beltItem = null;
 
         isSpaceTaken = false;
